@@ -1,9 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     const taskInput = document.getElementById('new-task');
-
-    // Focus on the task input field when the popup is opened
-    taskInput.focus();
-
     const addButton = document.getElementById('add-task');
     const taskCategory = document.getElementById('task-category');
     const taskList = document.getElementById('task-list');
@@ -89,13 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
     taskInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
             addTask();
-        }
-    });
-
-    document.addEventListener('keydown', function(event) {
-        if ((event.ctrlKey || event.metaKey) && event.key === 'n') {
-            event.preventDefault();
-            taskInput.focus();
         }
     });
 
