@@ -1,18 +1,21 @@
 {
   "manifest_version": 3,
-  "name": "To-Do List",
-  "description": "A simple to-do list Chrome extension.",
+  "name": "TO DO LIST",
   "version": "1.0",
+  "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "clawback.png",
       "48": "clawback.png",
       "128": "clawback.png"
+    },
+    "default_title": "TO DO LIST",
+    "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": "clawback.png",
+      "default_title": "TO DO LIST",
+      "default_key": "Cmd+T"  // Change to Cmd+T for macOS
     }
-  },
-  "permissions": ["storage"],
-  "icons": {
-    "48": "clawback.png"
   }
 }
