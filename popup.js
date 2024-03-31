@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const taskInput = document.getElementById('new-task');
     const taskList = document.getElementById('task-list');
 
+    // Function to rebuild the task list
     function buildTaskList() {
         taskList.innerHTML = ''; // Clear existing tasks
         chrome.storage.local.get(['tasks'], function(result) {
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Function to add a task to the list in the UI
     function addTaskToList(task, index) {
         const li = document.createElement('li');
 
@@ -46,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         taskList.appendChild(li);
     }
 
+    // Function to toggle a task's completion status
     function toggleTaskCompleted(index) {
         chrome.storage.local.get(['tasks'], function(result) {
             let tasks = result.tasks || [];
@@ -56,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Function to delete a task
     function deleteTask(index) {
         chrome.storage.local.get(['tasks'], function(result) {
             let tasks = result.tasks || [];
@@ -66,7 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    addButton.addEventListener('click', function() {
+    // Function to handle adding a new task
+    function addTask() {
         const taskText = taskInput.value;
         if (taskText) {
             chrome.storage.local.get(['tasks'], function(result) {
@@ -78,7 +83,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
+    }
+
+    // Event listener for the 'Add Task' button click
+    addButton.addEventListener('click', addTask);
+
+    // Event listener for the 'Enter' key in the input field
+    taskInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            addTask();
+        }
     });
 
+    // Initial build of the task list
     buildTaskList();
 });
