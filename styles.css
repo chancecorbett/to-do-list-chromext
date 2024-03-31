@@ -4,14 +4,14 @@ body {
     margin: 0;
     background-color: #f9f9f9;
     color: #333;
-    min-width: 400px; /* Set a minimum width for the popup */
+    min-width: 400px;
 }
 
 h1 {
     color: #5a5a5a;
     font-size: 24px;
     margin-bottom: 20px;
-    text-align: center; /* Center the heading */
+    text-align: center;
 }
 
 div {
@@ -21,24 +21,25 @@ div {
     margin-bottom: 20px;
 }
 
-input[type="text"] {
-    flex-grow: 1; /* Allow input to fill space */
+input[type="text"], select#task-category {
+    flex-grow: 1;
     padding: 10px;
     margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px; /* Increase font size for better readability */
+    font-size: 16px;
+    background-color: white;
 }
 
 button {
     background-color: #008cba;
     color: white;
-    padding: 10px 20px; /* Add more horizontal padding */
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-size: 16px; /* Increase font size for better readability */
+    font-size: 16px;
 }
 
 button:hover {
@@ -48,7 +49,7 @@ button:hover {
 ul {
     list-style-type: none;
     padding: 0;
-    margin: 0; /* Remove default margin */
+    margin: 0;
 }
 
 li {
@@ -62,25 +63,3 @@ li {
     justify-content: space-between;
 }
 
-li span {
-    max-width: 70%; /* Allow some space for the delete button */
-    word-break: break-word; /* Ensure long words do not overflow */
-}
-
-input[type="checkbox"] {
-    margin-right: 15px;
-}
-
-.deleteBtn {
-    padding: 5px 10px;
-    background-color: #ff6347;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.deleteBtn:hover {
-    background-color: #c53b2c;
-}
