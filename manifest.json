@@ -17,8 +17,9 @@
       "default_title": "Shit I need to do",
       "default_key": "Cmd+T" 
     }
-  },
+},
   "chrome_url_overrides": {
     "newtab": "manage.html"
-  }
+  },
+  "options_page": "settings.html"
 }
