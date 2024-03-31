@@ -1,31 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const addButton = document.getElementById('add-task');
     const taskInput = document.getElementById('new-task');
+
+    // Focus on the task input field when the popup is opened
+    taskInput.focus();
+
+    const addButton = document.getElementById('add-task');
     const taskCategory = document.getElementById('task-category');
     const taskList = document.getElementById('task-list');
 
-    function addTask() {
-        const taskText = taskInput.value;
-        const category = taskCategory.value;
-        if (taskText) {
-            chrome.storage.local.get(['tasks'], function(result) {
-                const tasks = result.tasks || [];
-                tasks.push({ text: taskText, completed: false, category: category });
-                chrome.storage.local.set({ 'tasks': tasks }, function() {
-                    buildTaskList();
-                    taskInput.value = '';
-                    taskCategory.selectedIndex = 0; // Reset category selection
-                });
+    function buildTaskList() {
+        taskList.innerHTML = ''; // Clear existing tasks
+        chrome.storage.local.get(['tasks'], function(result) {
+            const tasks = result.tasks || [];
+            tasks.forEach((task, index) => {
+                addTaskToList(task, index);
             });
-        }
+        });
     }
 
     function addTaskToList(task, index) {
         const li = document.createElement('li');
+        li.className = 'task-item';
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.checked = task.completed;
+        checkbox.className = 'task-checkbox';
         checkbox.onchange = function() {
             toggleTaskCompleted(index);
         };
@@ -54,9 +54,24 @@ document.addEventListener('DOMContentLoaded', function() {
         taskList.appendChild(li);
     }
 
+    function addTask() {
+        const taskText = taskInput.value.trim();
+        const categoryValue = taskCategory.value;
+        if (taskText) {
+            chrome.storage.local.get(['tasks'], function(result) {
+                const tasks = result.tasks || [];
+                tasks.push({ text: taskText, completed: false, category: categoryValue });
+                chrome.storage.local.set({ 'tasks': tasks }, function() {
+                    buildTaskList();
+                    taskInput.value = ''; // Clear the input field
+                });
+            });
+        }
+    }
+
     function toggleTaskCompleted(index) {
         chrome.storage.local.get(['tasks'], function(result) {
-            let tasks = result.tasks || [];
+            const tasks = result.tasks || [];
             tasks[index].completed = !tasks[index].completed;
             chrome.storage.local.set({ 'tasks': tasks }, buildTaskList);
         });
@@ -64,17 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function deleteTask(index) {
         chrome.storage.local.get(['tasks'], function(result) {
-            let tasks = result.tasks || [];
+            const tasks = result.tasks || [];
             tasks.splice(index, 1);
             chrome.storage.local.set({ 'tasks': tasks }, buildTaskList);
-        });
-    }
-
-    function buildTaskList() {
-        taskList.innerHTML = '';
-        chrome.storage.local.get(['tasks'], function(result) {
-            const tasks = result.tasks || [];
-            tasks.forEach(addTaskToList);
         });
     }
 
@@ -85,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Keyboard shortcut event listener
     document.addEventListener('keydown', function(event) {
         if ((event.ctrlKey || event.metaKey) && event.key === 'n') {
             event.preventDefault();
